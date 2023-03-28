@@ -10,7 +10,7 @@ using System.ComponentModel.Design;
 
 namespace CompanyProject.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class CompanyController : ControllerBase
     {
@@ -28,7 +28,7 @@ namespace CompanyProject.Controllers
         /// <returns></returns>
 
         [HttpGet("{companyId}")]
-        public IActionResult GetDepartmentsByCompanyId(int companyId)
+        public IActionResult Departments(int companyId)
         {
             var departments = _companyService.GetDepartmentsByCompanyId(companyId);
 
@@ -38,6 +38,47 @@ namespace CompanyProject.Controllers
             }
 
             return Ok(departments);
+        }
+
+
+
+        /// <summary>
+        /// Get Position by specific CompanyId
+        /// </summary>
+        /// <param name="companyId"></param>
+        /// <returns></returns>
+        [HttpGet("{companyId}")]
+        public IActionResult Position(int companyId)
+        {
+            var position = _companyService.GetPositionByCompanyId(companyId);
+
+            if (position == null || !position.Any())
+            {
+                return NotFound();
+            }
+
+            return Ok(position);
+        }
+
+
+
+        /// <summary>
+        /// Get Branches with specific CompanyId
+        /// </summary>
+        /// <param name="companyId"></param>
+        /// <returns></returns>
+
+        [HttpGet("{companyId}")]
+        public IActionResult Branches(int companyId)
+        {
+            var branches = _companyService.GetBranchesByCompanyId(companyId);
+
+            if (branches == null || !branches.Any())
+            {
+                return NotFound();
+            }
+
+            return Ok(branches);
         }
 
     }

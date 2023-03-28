@@ -19,6 +19,8 @@ namespace BLL.Services
             _repository = repository;
         }
 
+
+
         public IEnumerable<DepartmentResponsModel> GetDepartmentsByCompanyId(int companyId)
         {
             var departments = _repository.GetDepartmentsByCompanyId(companyId);
@@ -30,20 +32,35 @@ namespace BLL.Services
 
             return departments;
         }
+
+
+
       
+        public IEnumerable<PositionResponseModel> GetPositionByCompanyId(int companyId)
+        {
+            var position = _repository.GetPositionByCompanyId(companyId);
+
+            if (position == null || !position.Any())
+            {
+                throw new ArgumentException($"No position found for Company with ID {companyId}");
+            }
+
+            return position;
+        }
 
 
 
-        //public IEnumerable<Department> GetDepart()
+    
+        public IEnumerable<BranchResponsModel> GetBranchesByCompanyId(int companyId)
+        {
+            var branches = _repository.GetBranchesByCompanyId(companyId);
 
-        //{
-        //   return _repository.GetAll();
-        //}
+            if (branches == null || !branches.Any())
+            {
+                throw new ArgumentException($"No CompanyBranches found for Company with ID {companyId}");
+            }
 
-        //public IEnumerable<Department> GetDepById(int id)
-
-        //{
-        //    return _repository.GetAll();
-        //}
+            return branches;
+        }
     }
 }

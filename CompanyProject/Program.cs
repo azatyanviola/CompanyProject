@@ -15,10 +15,7 @@ builder.Services.AddScoped<BenefiticContext>();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
 builder.Services.AddScoped<ICompanyService, CompanyService>();
-builder.Services.AddScoped<IUserCompanyRepository, UserCompanyRepository>();
-builder.Services.AddScoped<IUserCompanyService, UserCompanyService>();
-builder.Services.AddScoped<IBranchRepository, BranchRepository>();
-builder.Services.AddScoped<IBranchService, BranchService>();
+
 
 var app = builder.Build();
 
