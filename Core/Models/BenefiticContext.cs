@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Npgsql;
+using NpgsqlTypes;
 
 namespace Core.Models
 {
@@ -22,6 +25,7 @@ namespace Core.Models
         public virtual DbSet<City> Cities { get; set; } = null!;
         public virtual DbSet<Company> Companies { get; set; } = null!;
         public virtual DbSet<CompanyBranch> CompanyBranches { get; set; } = null!;
+        public virtual DbSet<Branch> Branches { get; set; } = null!;
         public virtual DbSet<CompanyDepartment> CompanyDepartments { get; set; } = null!;
         public virtual DbSet<CompanyIndustry> CompanyIndustries { get; set; } = null!;
         public virtual DbSet<CompanyType> CompanyTypes { get; set; } = null!;
@@ -30,6 +34,7 @@ namespace Core.Models
         public virtual DbSet<Industry> Industries { get; set; } = null!;
         public virtual DbSet<OnlineBenefitTransaction> OnlineBenefitTransactions { get; set; } = null!;
         public virtual DbSet<Package> Packages { get; set; } = null!;
+        public virtual DbSet<CompanyPosition> CompanyPositions { get; set; } = null!;
         public virtual DbSet<PackagePartner> PackagePartners { get; set; } = null!;
         public virtual DbSet<PackageStatus> PackageStatuses { get; set; } = null!;
         public virtual DbSet<PartnerService> PartnerServices { get; set; } = null!;
@@ -50,7 +55,21 @@ namespace Core.Models
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
                 optionsBuilder.UseNpgsql("Host=localhost;Database=Benefitic;User Id=postgres;Password=admin;");
+               
             }
+        }
+
+        public class DateTimeToDateTimeUtc : ValueConverter<DateTime, DateTime>
+        {
+            public DateTimeToDateTimeUtc() : base(c => DateTime.SpecifyKind(c, DateTimeKind.Utc), c => c)
+            {
+
+            }
+        }
+        protected sealed override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
+        {
+            configurationBuilder.Properties<DateTime>()
+                .HaveConversion(typeof(DateTimeToDateTimeUtc));
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -133,10 +152,7 @@ namespace Core.Models
 
                 entity.Property(e => e.WebSiteUrl).HasMaxLength(1000);
 
-                entity.HasOne(d => d.Address)
-                    .WithMany(p => p.Companies)
-                    .HasForeignKey(d => d.AddressId)
-                    .HasConstraintName("Companies_AddressId_fkey");
+                
 
                 entity.HasOne(d => d.PhoneCode)
                     .WithMany(p => p.Companies)
@@ -217,6 +233,8 @@ namespace Core.Models
 
                 entity.Property(e => e.Name).HasMaxLength(100);
             });
+
+           
 
             modelBuilder.Entity<Industry>(entity =>
             {
@@ -330,10 +348,7 @@ namespace Core.Models
 
                 entity.Property(e => e.Name).HasMaxLength(100);
 
-                entity.HasOne(d => d.Department)
-                    .WithMany(p => p.Positions)
-                    .HasForeignKey(d => d.DepartmentId)
-                    .HasConstraintName("Positions_DepartmentId_fkey");
+          
             });
 
             modelBuilder.Entity<Region>(entity =>
@@ -392,20 +407,20 @@ namespace Core.Models
 
                 entity.Property(e => e.LastName).HasMaxLength(200);
 
-                entity.HasOne(d => d.Address)
-                    .WithMany(p => p.UserCompanies)
-                    .HasForeignKey(d => d.AddressId)
-                    .HasConstraintName("UserCompanies_AddressId_fkey");
-
-                entity.HasOne(d => d.Company)
-                    .WithMany(p => p.UserCompanies)
-                    .HasForeignKey(d => d.CompanyId)
-                    .HasConstraintName("UserCompanies_CompanyId_fkey");
-
                 entity.HasOne(d => d.Position)
                     .WithMany(p => p.UserCompanies)
                     .HasForeignKey(d => d.PositionId)
                     .HasConstraintName("UserCompanies_PositionId_fkey");
+
+                entity.HasOne(d => d.Branch)
+                    .WithMany(p => p.UserCompanies)
+                    .HasForeignKey(d => d.BranchId)
+                    .HasConstraintName("UserCompanies_BranchId_fkey");
+
+                entity.HasOne(d => d.Department)
+                    .WithMany(p => p.UserCompanies)
+                    .HasForeignKey(d => d.DepartmentId)
+                    .HasConstraintName("UserCompanies_DepartmentId_fkey");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.UserCompanies)
@@ -433,6 +448,42 @@ namespace Core.Models
                 entity.ToTable("UserRoles", "auth");
 
                 entity.Property(e => e.Name).HasMaxLength(100);
+            });
+
+            modelBuilder.Entity<CompanyPosition>(entity =>
+            {
+                entity.ToTable("CompanyPositions", "maindata");
+
+                entity.HasOne(d => d.Company)
+                    .WithMany(p => p.CompanyPositions)
+                    .HasForeignKey(d => d.CompanyId)
+                    .HasConstraintName("CompanyPositions_CompanyId_fkey");
+
+                entity.HasOne(d => d.Position)
+                    .WithMany(p => p.CompanyPositions)
+                    .HasForeignKey(d => d.PositionId)
+                    .HasConstraintName("CompanyPositions_PositionId_fkey");
+            });
+
+
+            modelBuilder.Entity<Branch>(entity =>
+            {
+                entity.ToTable("Branches", "auth");
+
+                entity.Property(e => e.Name)
+                    .HasColumnName("Name")
+                    .HasMaxLength(100)
+                    .IsRequired();
+
+
+                entity.Property(e => e.AddressId)
+                    .HasColumnName("AddressId");
+
+                entity.HasOne(e => e.Address)
+                    .WithMany()
+                    .HasForeignKey(e => e.AddressId)
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .IsRequired(false);
             });
 
             OnModelCreatingPartial(modelBuilder);

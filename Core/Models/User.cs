@@ -13,7 +13,7 @@ namespace Core.Models
        
         public int? PhoneCodeId { get; set; }
         public string PhoneNumber { get; set; } = null!;
-        public DateOnly? ExpirationDate { get; set; }
+        public DateTime? ExpirationDate { get; set; }
         public string? VerificationCode { get; set; }
 
         public virtual PhoneCode? PhoneCode { get; set; }

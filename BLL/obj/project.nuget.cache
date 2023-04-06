@@ -1,9 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "UMClZHdyuXHHKkSoy3+ezDAQVcyZvlLPX1vRZNt8TDbRPJhj68+WFdqdXh/foVD+lFg4XnhtKLOmBxrZAC7nNA==",
+  "dgSpecHash": "sZ1EBA0LL8YK9d7GpV+2Y5SSF8ra11n5y8n+COJgaL6Fktx0VeW75Kb+gLeoE8ztlaTiRp8eD0t01n7nNCAJLw==",
   "success": true,
   "projectFilePath": "C:\\Users\\Violeta\\source\\repos\\CompanyProject\\BLL\\BLL.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Violeta\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
+    "C:\\Users\\Violeta\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.0\\automapper.extensions.microsoft.dependencyinjection.12.0.0.nupkg.sha512",
+    "C:\\Users\\Violeta\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
     "C:\\Users\\Violeta\\.nuget\\packages\\microsoft.entityframeworkcore\\6.0.0\\microsoft.entityframeworkcore.6.0.0.nupkg.sha512",
     "C:\\Users\\Violeta\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\6.0.0\\microsoft.entityframeworkcore.abstractions.6.0.0.nupkg.sha512",
     "C:\\Users\\Violeta\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\6.0.0\\microsoft.entityframeworkcore.analyzers.6.0.0.nupkg.sha512",

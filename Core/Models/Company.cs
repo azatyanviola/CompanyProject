@@ -15,12 +15,13 @@ namespace Core.Models
             CompanyTypes = new HashSet<CompanyType>();
             PackagePartners = new HashSet<PackagePartner>();
             PartnerServices = new HashSet<PartnerService>();
-            UserCompanies = new HashSet<UserCompany>();
+           
+            CompanyPositions = new HashSet<CompanyPosition>();
         }
 
        
         public string Name { get; set; } = null!;
-        public int? AddressId { get; set; }
+        
         public int? PhoneCodeId { get; set; }
         public string PhoneNumber { get; set; } = null!;
         public string TaxNumber { get; set; } = null!;
@@ -29,7 +30,7 @@ namespace Core.Models
         public string LogoPath { get; set; } = null!;
         public string? Description { get; set; }
 
-        public virtual Address? Address { get; set; }
+        
         public virtual PhoneCode? PhoneCode { get; set; }
         public virtual ICollection<BenefitTransaction> BenefitTransactions { get; set; }
         public virtual ICollection<CompanyBranch> CompanyBranchBranches { get; set; }
@@ -39,6 +40,7 @@ namespace Core.Models
         public virtual ICollection<CompanyType> CompanyTypes { get; set; }
         public virtual ICollection<PackagePartner> PackagePartners { get; set; }
         public virtual ICollection<PartnerService> PartnerServices { get; set; }
-        public virtual ICollection<UserCompany> UserCompanies { get; set; }
+        
+        public virtual ICollection<CompanyPosition> CompanyPositions { get; set; }
     }
 }

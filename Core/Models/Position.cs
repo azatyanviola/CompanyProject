@@ -8,13 +8,16 @@ namespace Core.Models
         public Position()
         {
             UserCompanies = new HashSet<UserCompany>();
+            CompanyPositions = new HashSet<CompanyPosition>();
         }
 
        
         public string? Name { get; set; }
-        public int? DepartmentId { get; set; }
+       
 
-        public virtual Department? Department { get; set; }
+        
         public virtual ICollection<UserCompany> UserCompanies { get; set; }
-    }
+        public virtual ICollection<CompanyPosition> CompanyPositions { get; set; }
+    
+}
 }

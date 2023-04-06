@@ -15,20 +15,22 @@ namespace Core.Models
         }
 
         public int? UserId { get; set; }
-        public int? CompanyId { get; set; }
+        public int? BranchId { get; set; }
         public int? PositionId { get; set; }
+        public int? DepartmentId { get; set; }
         public string FirstName { get; set; } = null!;
         public string LastName { get; set; } = null!;
         public string Email { get; set; } = null!;
-        public DateOnly? BirthDate { get; set; }
-        public int? AddressId { get; set; }
-        public DateOnly? InsertedDate { get; set; }
-        public DateOnly? UpdatedDate { get; set; }
+        public DateTime? BirthDate { get; set; }
+      
+        public DateTime? InsertedDate { get; set; }
+        public DateTime? UpdatedDate { get; set; }
 
-        public virtual Address? Address { get; set; }
-        public virtual Company? Company { get; set; }
+        
+        public virtual Department? Department { get; set; }
         public virtual Position? Position { get; set; }
         public virtual User? User { get; set; }
+        public virtual Branch? Branch { get; set; }
         public virtual ICollection<Benefit> Benefits { get; set; }
         public virtual ICollection<OnlineBenefitTransaction> OnlineBenefitTransactions { get; set; }
         public virtual ICollection<Package> Packages { get; set; }

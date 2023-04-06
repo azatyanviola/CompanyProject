@@ -41,3 +41,5 @@ C:\Users\Violeta\source\repos\CompanyProject\CompanyProject\bin\Debug\net6.0\Cor
 C:\Users\Violeta\source\repos\CompanyProject\CompanyProject\bin\Debug\net6.0\Core.pdb
 C:\Users\Violeta\source\repos\CompanyProject\CompanyProject\bin\Debug\net6.0\BLL.dll
 C:\Users\Violeta\source\repos\CompanyProject\CompanyProject\bin\Debug\net6.0\BLL.pdb
+C:\Users\Violeta\source\repos\CompanyProject\CompanyProject\bin\Debug\net6.0\AutoMapper.dll
+C:\Users\Violeta\source\repos\CompanyProject\CompanyProject\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
